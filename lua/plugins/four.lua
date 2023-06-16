@@ -7,6 +7,14 @@
 return {
   -- disable trouble
   { "folke/trouble.nvim", enabled = false },
+
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      opts.auto_install = true
+    end,
+  },
+
   -- dashboard
   {
     "goolord/alpha-nvim",
@@ -77,5 +85,15 @@ return {
       vim.cmd("Alpha")
     end,
   },
-
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   ---@class PluginLspOpts
+  --   opts = {
+  --     ---@type lspconfig.options
+  --     servers = {
+  --       tsserver = {},
+  --       intelephense = {}
+  --     },
+  --   },
+  -- },
 }
