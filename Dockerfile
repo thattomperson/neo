@@ -7,7 +7,7 @@ ENV HOME="/root"
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Install nvim
-RUN apk add --no-cache build-base cmake coreutils curl unzip gettext-tiny-dev bash tini;
+RUN apk add --no-cache build-base cmake coreutils curl unzip gettext-tiny-dev bash tini perl fish;
 RUN git clone --depth 1 https://github.com/neovim/neovim --branch nightly /usr/src/neovim && \
   cd /usr/src/neovim && \
   make CMAKE_BUILD_TYPE=RelWithDebInfo && \
@@ -38,7 +38,9 @@ RUN curl -fsSLO https://download.docker.com/linux/static/stable/aarch64/docker-$
   && rm docker-${DOCKERVERSION}.tgz
 
 # # Copy the default config to the ~/.config/nvim folder
-COPY . /root/.config/nvim
+COPY lua /root/.config/nvim/lua
+COPY init.lua /root/.config/nvim/init.lua
+COPY bin /usr/local/bin
 
 # # Initalize nvim & install plugins
 RUN nvim --headless -c 'quitall'
