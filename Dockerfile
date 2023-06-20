@@ -7,7 +7,7 @@ ENV HOME="/root"
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Install nvim
-RUN apk add --no-cache build-base cmake coreutils curl unzip gettext-tiny-dev bash tini perl fish;
+RUN apk add --no-cache build-base cmake coreutils curl unzip gettext-tiny-dev bash tini perl fish ripgrep;
 RUN git clone --depth 1 https://github.com/neovim/neovim --branch nightly /usr/src/neovim && \
   cd /usr/src/neovim && \
   make CMAKE_BUILD_TYPE=RelWithDebInfo && \
