@@ -51,7 +51,8 @@ RUN nvim --headless -c ':MasonInstallAll' -c 'quitall' || sleep 5;
 # # This is just a QOL thing that we will probably do 99% of the time anyway
 RUN git config --global --add safe.directory /app
 
-WORKDIR /app
+RUN fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
 
+WORKDIR /app
 ENTRYPOINT ["tini", "--"]
 CMD ["nvim"]
