@@ -47,9 +47,9 @@ RUN nvim --headless -c 'quitall'
 # # Install LSPs and tools
 RUN nvim --headless -c ':MasonInstallAll' -c 'quitall' || sleep 5;
 
-# # Set the /app dir as a valid git directory,
+# # Set the * as a valid git directory,
 # # This is just a QOL thing that we will probably do 99% of the time anyway
-RUN git config --global --add safe.directory *
+RUN git config --global --add safe.directory "*"
 
 RUN fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
 
