@@ -52,5 +52,7 @@ RUN nvim --headless -c ':MasonInstallAll' -c 'quitall' || sleep 5;
 RUN git config --global --add safe.directory /app
 
 WORKDIR /app
+SHELL ["/usr/bin/fish", "-c"]
+
 ENTRYPOINT ["tini", "--"]
 CMD ["nvim"]
