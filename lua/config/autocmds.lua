@@ -6,8 +6,11 @@ local function augroup(name)
     return vim.api.nvim_create_augroup("four_" .. name, { clear = true })
 end
 
-vim.api.nvim_create_autocmd("VeryLazy", function()
-    vim.notify('Installing PHP extensions...', 'Info')
-    io.popen("four-php-dev php:install-extensions")
-    vim.notify('PHP extensions Installed!', 'Info')
-end)
+vim.api.nvim_create_autocmd("User", {
+    pattern = "VeryLazy",
+    callback = function()
+        vim.notify('Installing PHP extensions...', 'Info')
+        io.popen("four-php-dev php:install-extensions")
+        vim.notify('PHP extensions Installed!', 'Info')
+    end,
+})
