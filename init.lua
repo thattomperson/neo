@@ -1,4 +1,4 @@
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+--  NOTE: Must happen beforemplugins are required (otherwise wrong leader will be used)
 require 'kickstart.options';
 
 -- Install package manager
@@ -137,6 +137,10 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+-- Term keymaps
+vim.keymap.set('n', '<C-`>', '<cmd> ToggleTerm <cr>', { desc = 'Toggle Terminal' })
+vim.keymap.set('t', '<C-`>', '<cmd> ToggleTerm <cr>', { desc = 'Toggle Terminal' })
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
