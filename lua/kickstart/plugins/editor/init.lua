@@ -99,4 +99,5 @@ return {
   require 'kickstart.plugins.editor.lsp',
   require 'kickstart.plugins.editor.telescope',
   require 'kickstart.plugins.editor.git',
+  require 'kickstart.plugins.editor.term',
 }
