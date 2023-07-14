@@ -298,8 +298,10 @@ return {
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
+    event = "BufEnter",
     opts = {
       char = '┊',
+      show_current_context = true,
       show_trailing_blankline_indent = false,
     },
   },
