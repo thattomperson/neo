@@ -45,7 +45,7 @@ COPY bin /usr/local/bin
 # # Initalize nvim & install plugins
 RUN nvim --headless -c 'quitall'
 # # Install LSPs and tools
-RUN nvim --headless -c ':MasonInstallAll' -c 'quitall' || sleep 5;
+RUN nvim --headless -c ':MasonInstallAll' -c ':TSUpdate' -c 'quitall' || sleep 5;
 
 # # Set the * as a valid git directory,
 # # This is just a QOL thing that we will probably do 99% of the time anyway
