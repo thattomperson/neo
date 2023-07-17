@@ -1,6 +1,6 @@
 return {
   {
-    'echasnovski/mini.starter',
+    "echasnovski/mini.starter",
     version = false,
     event = "VimEnter",
     opts = function()

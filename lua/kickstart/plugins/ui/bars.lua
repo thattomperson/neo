@@ -4,7 +4,7 @@ return {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
     keys = {
-      { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>",            desc = "Toggle pin" },
+      { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
       { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
     },
     dependencies = {
@@ -15,14 +15,18 @@ return {
       return {
         highlights = require("catppuccin.groups.integrations.bufferline").get(),
         options = {
-          close_command = function(n) require("mini.bufremove").delete(n, false) end,
-          right_mouse_command = function(n) require("mini.bufremove").delete(n, false) end,
+          close_command = function(n)
+            require("mini.bufremove").delete(n, false)
+          end,
+          right_mouse_command = function(n)
+            require("mini.bufremove").delete(n, false)
+          end,
           diagnostics = "nvim_lsp",
           always_show_bufferline = true,
           diagnostics_indicator = function(_, _, diag)
             local icons = require("kickstart.util.icons").diagnostics
             local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-                .. (diag.warning and icons.Warn .. diag.warning or "")
+              .. (diag.warning and icons.Warn .. diag.warning or "")
             return vim.trim(ret)
           end,
           offsets = {
@@ -53,8 +57,8 @@ return {
       return {
         options = {
           -- Disable sections and component separators
-          component_separators = '',
-          section_separators = '',
+          component_separators = "",
+          section_separators = "",
           theme = "catppuccin",
           globalstatus = true,
           disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
@@ -77,7 +81,9 @@ return {
               icon_only = true,
               separator = "",
               padding = {
-                left = 1, right = 0 }
+                left = 1,
+                right = 0,
+              },
             },
             { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
             -- stylua: ignore
@@ -87,8 +93,8 @@ return {
             },
             {
               function()
-                local msg = 'No Active Lsp'
-                local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+                local msg = "No Active Lsp"
+                local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
                 local clients = vim.lsp.get_active_clients()
                 if next(clients) == nil then
                   return msg
@@ -101,9 +107,11 @@ return {
                 end
                 return msg
               end,
-              cond = function() return true end,
+              cond = function()
+                return true
+              end,
               color = Util.fg("Statement"),
-              icon = ':'
+              icon = ":",
             },
           },
           lualine_x = {
@@ -136,7 +144,7 @@ return {
             },
           },
           lualine_y = {
-            { "progress", separator = " ",                  padding = { left = 1, right = 0 } },
+            { "progress", separator = " ", padding = { left = 1, right = 0 } },
             { "location", padding = { left = 0, right = 1 } },
           },
           lualine_z = {
