@@ -42,6 +42,8 @@ COPY lua /root/.config/nvim/lua
 COPY init.lua /root/.config/nvim/init.lua
 COPY bin /usr/local/bin
 
+ARG CACHE_BUST
+
 # # Initalize nvim & install plugins
 RUN nvim --headless -c 'quitall'
 # # Install LSPs and tools
