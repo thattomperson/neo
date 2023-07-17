@@ -134,16 +134,6 @@ return {
           completeopt = "menu,menuone",
         },
 
-        window = {
-          completion = {
-            side_padding = 1,
-            winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel",
-            scrollbar = false,
-          },
-          documentation = {
-            winhighlight = "Normal:CmpDoc",
-          },
-        },
         snippet = {
           expand = function(args)
             require("luasnip").lsp_expand(args.body)
