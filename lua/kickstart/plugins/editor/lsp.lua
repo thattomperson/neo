@@ -190,30 +190,30 @@ return {
       return options
     end,
   },
-  {
-    url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
-    ft = { "php" },
-    dependencies = {
-      "williamboman/mason.nvim"
-    },
-    config = function()
-      local sonar_language_server_path = require("mason-registry")
-          .get_package("sonarlint-language-server")
-          :get_install_path()
-      local analyzers_path = sonar_language_server_path .. "/extension/analyzers"
-      require("sonarlint").setup({
-        server = {
-          cmd = {
-            sonar_language_server_path .. "/sonarlint-language-server.cmd",
-            "-stdio",
-            "-analyzers",
-            vim.fn.expand(analyzers_path .. "/sonarphp.jar"),
-          }
-        },
-        filetypes = {
-          "php",
-        }
-      })
-    end
-  },
+  --{
+  --  url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
+  --  ft = { "php" },
+  --  dependencies = {
+  --    "williamboman/mason.nvim"
+  --  },
+  --  config = function()
+  --    local sonar_language_server_path = require("mason-registry")
+  --        .get_package("sonarlint-language-server")
+  --        :get_install_path()
+  --    local analyzers_path = sonar_language_server_path .. "/extension/analyzers"
+  --    require("sonarlint").setup({
+  --      server = {
+  --        cmd = {
+  --          sonar_language_server_path .. "/sonarlint-language-server.cmd",
+  --          "-stdio",
+  --          "-analyzers",
+  --          vim.fn.expand(analyzers_path .. "/sonarphp.jar"),
+  --        }
+  --      },
+  --      filetypes = {
+  --        "php",
+  --      }
+  --    })
+  --  end
+  --},
 }
