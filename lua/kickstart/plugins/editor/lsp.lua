@@ -5,7 +5,21 @@ return {
   {
     "williamboman/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUninstall", "MasonUninstallAll", "MasonLog", "Format" },
-    opts = {},
+    opts = {
+      ensure_installed = {
+        "intelephense",
+        "sonarlint-language-server",
+        "phpcs",
+        "phpcbf",
+      },
+    },
+    config = function(_, opts)
+      require('mason').setup(opts)
+
+      vim.api.nvim_create_user_command("MasonInstallAll", function()
+        vim.cmd("MasonInstall " .. table.concat(opts.ensure_installed, " "))
+      end, {})
+    end,
   },
   {
     -- LSP Configuration & Plugins
@@ -25,14 +39,6 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    opts = {
-      ensure_installed = {
-        "intelephense",
-        "sonarlint-language-server",
-        "phpcs",
-        "phpcbf",
-      },
-    },
     config = function(_, opts)
       local on_attach = function(_, bufnr)
         -- NOTE: Remember that lua is a real programming language, and as such it is possible
@@ -90,10 +96,6 @@ return {
           })
         end,
       })
-
-      vim.api.nvim_create_user_command("MasonInstallAll", function()
-        vim.cmd("MasonInstall " .. table.concat(opts.ensure_installed, " "))
-      end, {})
     end,
   },
   {
@@ -187,5 +189,31 @@ return {
 
       return options
     end,
+  },
+  {
+    url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
+    ft = { "php" },
+    dependencies = {
+      "williamboman/mason.nvim"
+    },
+    config = function()
+      local sonar_language_server_path = require("mason-registry")
+          .get_package("sonarlint-language-server")
+          :get_install_path()
+      local analyzers_path = sonar_language_server_path .. "/extension/analyzers"
+      require("sonarlint").setup({
+        server = {
+          cmd = {
+            sonar_language_server_path .. "/sonarlint-language-server.cmd",
+            "-stdio",
+            "-analyzers",
+            vim.fn.expand(analyzers_path .. "/sonarphp.jar"),
+          }
+        },
+        filetypes = {
+          "php",
+        }
+      })
+    end
   },
 }
