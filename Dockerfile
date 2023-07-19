@@ -1,4 +1,7 @@
-FROM cr.four.dev/four/php:7-all-dev
+# syntax=docker/dockerfile:1
+FROM --platform=$BUILDPLATFORM cr.four.dev/four/php:7-all-dev
+ARG BUILDPLATFORM 
+ARG TARGETARCH
 
 LABEL org.opencontainers.image.description "Neovim for PHP remote dev"
 LABEL org.opencontainers.image.source "https://github.com/thattomperson/neo"
@@ -16,7 +19,12 @@ RUN git clone --depth 1 https://github.com/neovim/neovim --branch nightly /usr/s
 
 # Install Lazygit cli
 RUN LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Eo '"tag_name": "v([^"])*' | cut -c15-); \
-  curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_arm64.tar.gz"; \
+  case ${TARGETARCH} in \
+    "amd64")  LAZYGIT_ARCH=x86_64  ;; \
+    "arm64")  LAZYGIT_ARCH=arm64  ;; \
+    *) echo "Invalid arch ${TARGETARCH}"; exit 1 ;; \
+  esac; \
+  curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_${LAZYGIT_ARCH}.tar.gz"; \
   tar -xf lazygit.tar.gz lazygit; \
   rm lazygit.tar.gz; \
   chmod u+x lazygit; \
@@ -32,7 +40,12 @@ RUN ln -ns ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
 
 # # Install docker cli tool
 ENV DOCKERVERSION=20.10.23
-RUN curl -fsSLO https://download.docker.com/linux/static/stable/aarch64/docker-${DOCKERVERSION}.tgz \
+RUN case ${TARGETARCH} in \
+    "amd64")  DOCKER_ARCH=x86_64  ;; \
+    "arm64")  DOCKER_ARCH=aarch64 ;; \
+    *) echo "Invalid arch ${TARGETARCH}"; exit 1 ;; \
+  esac; \
+  curl -fsSLO "https://download.docker.com/linux/static/stable/${DOCKER_ARCH}/docker-${DOCKERVERSION}.tgz" \
   && tar xzvf docker-${DOCKERVERSION}.tgz --strip 1 \
                  -C /usr/local/bin docker/docker \
   && rm docker-${DOCKERVERSION}.tgz
