@@ -20,6 +20,7 @@ return {
     cmd = "ToggleTerm",
     keys = {
       { "<C-`>", "<cmd> ToggleTerm <cr>", mode = { "t", "n" } },
+      { "<leader>ft", "<cmd> ToggleTerm <cr>", mode = { "t", "n" } },
       {
         "<C-l>",
         function()
@@ -57,6 +58,8 @@ return {
       },
     },
     version = "*",
-    opts = {},
+    opts = {
+      direction = "vertical",
+    },
   },
 }
