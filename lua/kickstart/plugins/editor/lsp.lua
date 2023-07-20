@@ -233,7 +233,7 @@ return {
   },
   {
     "nvimdev/guard.nvim",
-    enable = false,
+    enabled = false,
     ft = { "php" },
     dependencies = {
       "williamboman/mason.nvim",
