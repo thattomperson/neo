@@ -70,6 +70,8 @@ RUN fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main
 RUN fish -c "fisher install IlanCosman/tide@v5.3.0"
 RUN fish -c "fisher install jhillyerd/plugin-git"
 
+COPY data /root/.config/nvim/data
+
 WORKDIR /app
 ENTRYPOINT ["tini", "--"]
 CMD ["nvim"]
