@@ -130,8 +130,8 @@ return {
           vim.api.nvim_create_autocmd("InsertLeave", {
             callback = function()
               if
-                  require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-                  and not require("luasnip").session.jump_active
+                require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+                and not require("luasnip").session.jump_active
               then
                 require("luasnip").unlink_current()
               end
@@ -208,6 +208,7 @@ return {
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
+    enabled = false,
     event = "VimEnter",
     config = function(_, opts)
       local null_ls = require("null-ls")
@@ -231,58 +232,7 @@ return {
       })
     end,
   },
-  {
-    "nvimdev/guard.nvim",
-    enabled = false,
-    ft = { "php" },
-    dependencies = {
-      "williamboman/mason.nvim",
-    },
-    opts = {
-      fmt_on_save = true,
-    },
-    config = function(_, opts)
-      vim.notify("Guard is loading")
-
-      local ft = require("guard.filetype")
-      local diag_fmt = require("guard.lint").diag_fmt
-
-      ft("php"):fmt("lsp"):lint({
-        cmd = "phpcs",
-        args = { "-", "--report=json" },
-        stdin = true,
-        output_fmt = function(result, buf)
-          vim.notify("PHPCS was RUN")
-          vim.notify(result)
-          local severities = {
-            WARNING = 2,
-            ERROR = 1,
-          }
-
-          local messages = vim.json.decode(result).files.STDIN.messages
-          local diags = {}
-
-          if #messages < 1 then
-            return {}
-          end
-
-          vim.tbl_map(function(mes)
-            diags[#diags + 1] = diag_fmt(
-              buf,
-              tonumber(mes.line) - 1,
-              tonumber(mes.column) - 1,
-              (mes.fixable and "[x]" or "") .. mes.message,
-              severities[mes.severity] or 2,
-              "phpcs"
-            )
-          end, offenses)
-        end,
-      })
-
-      require("guard").setup(opts)
-    end,
-  },
-  --{
+    --{
   --  url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
   --  ft = { "php" },
   --  dependencies = {
