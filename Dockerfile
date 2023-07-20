@@ -67,8 +67,8 @@ RUN nvim --headless -c ':TSUpdate' -c 'quitall' || sleep 1;
 RUN git config --global --add safe.directory "*"
 
 RUN fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
-RUN fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"@v5.3.0"
-RUN fish -c "fisher install IlanCosman/tide
+RUN fish -c "fisher install IlanCosman/tide@v5.3.0"
+RUN fish -c "fisher install jhillyerd/plugin-git"
 
 COPY data /root/.config/nvim/data
 
