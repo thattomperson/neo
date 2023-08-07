@@ -65,7 +65,10 @@ return {
         end,
       })
 
-      starter.open()
+      if #vim.fn.argv() == 0 then
+        -- Neovim was not opened with a file
+        starter.open()
+      end
     end,
   },
 }
