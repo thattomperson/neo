@@ -25,12 +25,13 @@ env:
 jobs:
   build:
     runs-on: ${{ matrix.os }}
-    matrix:
-      include:
-        - os: buildjet-2vcpu-ubuntu-2204-arm
-          platform: linux/arm64
-        - os: buildjet-2vcpu-ubuntu-2204
-          platform: linux/amd64
+    strategy:
+      matrix:
+        include:
+          - os: buildjet-2vcpu-ubuntu-2204-arm
+            platform: linux/arm64
+          - os: buildjet-2vcpu-ubuntu-2204
+            platform: linux/amd64
     permissions:
       contents: read
       packages: write
@@ -135,7 +136,6 @@ jobs:
         run: |
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
             $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)
-      -
-        name: Inspect image
+      - name: Inspect image
         run: |
           docker buildx imagetools inspect ${{ env.REGISTRY_IMAGE }}:${{ steps.meta.outputs.version }}
