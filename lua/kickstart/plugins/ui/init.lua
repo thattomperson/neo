@@ -167,18 +167,18 @@ return {
         "Scroll forward",
         mode = {
           "i", "n", "s" }
-        },
-        {
-          "<c-b>",
-          function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end,
-          silent = true,
-          expr = true,
-          desc =
-          "Scroll backward",
-          mode = {
-            "i", "n", "s" }
-          },
-        },
+      },
+      {
+        "<c-b>",
+        function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end,
+        silent = true,
+        expr = true,
+        desc =
+        "Scroll backward",
+        mode = {
+          "i", "n", "s" }
+      },
+    },
   },
   {
     -- Add indentation guides even on blank lines
@@ -191,6 +191,13 @@ return {
       show_current_context = true,
       show_trailing_blankline_indent = false,
     },
+  },
+  {
+    "nvim-treesitter/playground",
+    cmd = { "TSPlaygroundToggle" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    }
   },
   {
     -- Highlight, edit, and navigate code

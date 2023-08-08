@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1
-FROM cr.four.dev/four/php:7-all-dev
+FROM --platform=${BUILDPLATFORM:-linux/amd64} cr.four.dev/four/php:7-all-dev
 ARG TARGETARCH
+ARG BUILDPLATFORM
 
 LABEL org.opencontainers.image.description "Neovim for PHP remote dev"
 LABEL org.opencontainers.image.source "https://github.com/thattomperson/neo"
