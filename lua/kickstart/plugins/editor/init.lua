@@ -14,6 +14,12 @@ return {
         desc = "Open File browser",
       },
     },
+    opts = {
+      mappings = {
+        go_in = "<Right>",
+        go_out = "<Left>",
+      },
+    },
   },
 
   -- buffer remove
