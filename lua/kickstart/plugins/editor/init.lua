@@ -33,7 +33,11 @@ return {
   },
 
   -- "gc" to comment visual regions/lines
-  { "numToStr/Comment.nvim", opts = {} },
+  {
+    "numToStr/Comment.nvim",
+    keys = { "gc" },
+    opts = {}
+  },
 
   require("kickstart.plugins.editor.lsp"),
   require("kickstart.plugins.editor.guard"),
