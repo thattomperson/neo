@@ -74,9 +74,9 @@ return {
         nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
         nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-        nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
+        nmap("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
         nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-        nmap("gI", vim.lsp.buf.implementation, "[G]oto [I]mplementation")
+        nmap("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
         nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
         nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
         nmap("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
@@ -130,8 +130,8 @@ return {
           vim.api.nvim_create_autocmd("InsertLeave", {
             callback = function()
               if
-                require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-                and not require("luasnip").session.jump_active
+                  require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+                  and not require("luasnip").session.jump_active
               then
                 require("luasnip").unlink_current()
               end
@@ -232,7 +232,7 @@ return {
       })
     end,
   },
-    --{
+  --{
   --  url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
   --  ft = { "php" },
   --  dependencies = {
