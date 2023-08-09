@@ -1,18 +1,3 @@
-local function is_program_in_path(program_name)
-  local path_separator = vim.fn.has("win32") == 1 and ";" or ":"
-  local path = os.getenv("PATH")
-  local paths = vim.split(path, path_separator)
-
-  for _, p in ipairs(paths) do
-    local program_path = p .. "/" .. program_name
-    if vim.fn.executable(program_path) == 1 then
-      return true
-    end
-  end
-
-  return false
-end
-
 return {
 
   -- NOTE: This is where your plugins related to LSP can be installed.
@@ -130,8 +115,8 @@ return {
           vim.api.nvim_create_autocmd("InsertLeave", {
             callback = function()
               if
-                  require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-                  and not require("luasnip").session.jump_active
+                require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+                and not require("luasnip").session.jump_active
               then
                 require("luasnip").unlink_current()
               end
@@ -225,7 +210,7 @@ return {
           }),
           null_ls.builtins.formatting.stylua.with({
             condition = function()
-              return is_program_in_path("stylua")
+              return require("kickstart.util").is_program_in_path("stylua")
             end,
           }),
         },
