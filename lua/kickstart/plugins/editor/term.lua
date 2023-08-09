@@ -66,6 +66,12 @@ return {
           return vim.o.columns * 0.4
         end
       end,
+      shell = function()
+        if vim.fn.executable('fish') == 1 then
+          return 'fish';
+        end
+        return 'bash';
+      end,
       direction = "vertical",
     },
   },
