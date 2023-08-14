@@ -50,6 +50,10 @@ RUN case ${TARGETARCH} in \
                  -C /usr/local/bin docker/docker \
   && rm docker-${DOCKERVERSION}.tgz
 
+ENV TZ=Australia/Adelaide
+RUN apk add --no-cache tzdata; \
+  echo "$TZ" >  /etc/timezone;
+
 # # Copy the default config to the ~/.config/nvim folder
 COPY lua /root/.config/nvim/lua
 COPY init.lua /root/.config/nvim/init.lua
