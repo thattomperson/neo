@@ -192,8 +192,35 @@ return {
     end,
   },
   {
+    "mfussenegger/nvim-lint",
+    lazy = false,
+    config = function(_, opts)
+      local lint = require("lint")
+
+      local phpcs = lint.linters.phpcs
+      phpcs.args = {
+        "-q",
+        "--standard=" .. vim.fn.expand("~/.config/nvim/data/phpcs.xml"),
+        "--report=json",
+        "-",
+      }
+
+      lint.linters_by_ft = {
+        php = { "phpcs" },
+      }
+
+      vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter" }, {
+        pattern = { "*.php" },
+        callback = function()
+          lint.try_lint()
+        end,
+      })
+    end,
+  },
+  {
     "jose-elias-alvarez/null-ls.nvim",
     event = "VimEnter",
+    enabled = false,
     config = function(_, opts)
       local null_ls = require("null-ls")
       null_ls.setup({
