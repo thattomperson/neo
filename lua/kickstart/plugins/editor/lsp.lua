@@ -115,8 +115,8 @@ return {
           vim.api.nvim_create_autocmd("InsertLeave", {
             callback = function()
               if
-                require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-                and not require("luasnip").session.jump_active
+                  require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
+                  and not require("luasnip").session.jump_active
               then
                 require("luasnip").unlink_current()
               end
@@ -193,11 +193,9 @@ return {
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
-    enabled = false,
     event = "VimEnter",
     config = function(_, opts)
       local null_ls = require("null-ls")
-
       null_ls.setup({
         sources = {
           null_ls.builtins.diagnostics.cspell,

@@ -14,6 +14,8 @@ local function change_direction(direction, size)
   end
 end
 
+local Util = require("kickstart.util")
+
 return {
   {
     "akinsho/toggleterm.nvim",
@@ -66,12 +68,7 @@ return {
           return vim.o.columns * 0.4
         end
       end,
-      shell = function()
-        if vim.fn.executable('fish') == 1 then
-          return 'fish';
-        end
-        return 'bash';
-      end,
+      shell = Util.which("fish") or vim.o.shell,
       direction = "vertical",
     },
   },

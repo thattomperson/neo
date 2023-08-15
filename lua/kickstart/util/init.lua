@@ -256,7 +256,7 @@ function M.lsp_disable(server, cond)
   end)
 end
 
-function M.is_program_in_path(program_name)
+function M.which(program_name)
   local path_separator = vim.fn.has("win32") == 1 and ";" or ":"
   local path = os.getenv("PATH")
   local paths = vim.split(path, path_separator)
@@ -264,11 +264,15 @@ function M.is_program_in_path(program_name)
   for _, p in ipairs(paths) do
     local program_path = p .. "/" .. program_name
     if vim.fn.executable(program_path) == 1 then
-      return true
+      return program_path
     end
   end
 
   return false
+end
+
+function M.is_program_in_path(program_name)
+  return M.which(program_name) and true or false
 end
 
 return M

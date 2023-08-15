@@ -2,6 +2,7 @@ return {
   -- bufferline
   {
     "akinsho/bufferline.nvim",
+    enabled = false,
     event = "VeryLazy",
     keys = {
       { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
@@ -46,9 +47,9 @@ return {
     "nvim-lualine/lualine.nvim",
     event = "VimEnter",
     dependencies = {
-      "SmiteshP/nvim-navic",
-      "folke/noice.nvim",
-      "mfussenegger/nvim-dap",
+      --"SmiteshP/nvim-navic",
+      --"folke/noice.nvim",
+      --"mfussenegger/nvim-dap",
     },
     opts = function()
       local icons = require("kickstart.util.icons")

@@ -2,6 +2,7 @@ return {
   {
     "nvimdev/guard.nvim",
     lazy = false,
+    enabled = false,
     dependencies = {
       "williamboman/mason.nvim",
     },
