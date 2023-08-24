@@ -4,7 +4,7 @@ return {
   -- The configuration is done below. Search for lspconfig to find it below.
   {
     "williamboman/mason.nvim",
-    cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUninstall", "MasonUninstallAll", "MasonLog", "Format" },
+    cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUninstall", "MasonUninstallAll", "MasonLog" },
     opts = {
       ensure_installed = {
         -- General
@@ -28,7 +28,7 @@ return {
   {
     -- LSP Configuration & Plugins
     "neovim/nvim-lspconfig",
-    event = "BufEnter",
+    event = { "BufReadPre", "BufNewFile" },
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       "williamboman/mason.nvim",
@@ -77,11 +77,6 @@ return {
         nmap("<leader>wl", function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, "[W]orkspace [L]ist Folders")
-
-        -- Create a command `:Format` local to the LSP buffer
-        vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-          vim.lsp.buf.format()
-        end, { desc = "Format current buffer with LSP" })
       end
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -191,81 +186,4 @@ return {
       return options
     end,
   },
-  {
-    "mfussenegger/nvim-lint",
-    lazy = false,
-    config = function(_, opts)
-      local lint = require("lint")
-
-      local phpcs = lint.linters.phpcs
-      phpcs.args = {
-        "-q",
-        "--standard=" .. vim.fn.expand("~/.config/nvim/data/phpcs.xml"),
-        "--report=json",
-        "-",
-      }
-
-      lint.linters_by_ft = {
-        php = { "phpcs" },
-      }
-
-      vim.api.nvim_create_autocmd({ "TextChanged", "BufEnter" }, {
-        pattern = { "*.php" },
-        callback = function()
-          lint.try_lint()
-        end,
-      })
-    end,
-  },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    event = "VimEnter",
-    enabled = false,
-    config = function(_, opts)
-      local null_ls = require("null-ls")
-      null_ls.setup({
-        sources = {
-          null_ls.builtins.diagnostics.cspell,
-          null_ls.builtins.code_actions.cspell,
-          null_ls.builtins.diagnostics.phpcs.with({
-            extra_args = { "--standard", vim.fn.expand("~/.config/nvim/data/phpcs.xml") },
-          }),
-          null_ls.builtins.formatting.phpcbf.with({
-            extra_args = { "--standard", vim.fn.expand("~/.config/nvim/data/phpcs.xml") },
-          }),
-          null_ls.builtins.formatting.stylua.with({
-            condition = function()
-              return require("kickstart.util").is_program_in_path("stylua")
-            end,
-          }),
-        },
-      })
-    end,
-  },
-  --{
-  --  url = "https://gitlab.com/schrieveslaach/sonarlint.nvim",
-  --  ft = { "php" },
-  --  dependencies = {
-  --    "williamboman/mason.nvim"
-  --  },
-  --  config = function()
-  --    local sonar_language_server_path = require("mason-registry")
-  --        .get_package("sonarlint-language-server")
-  --        :get_install_path()
-  --    local analyzers_path = sonar_language_server_path .. "/extension/analyzers"
-  --    require("sonarlint").setup({
-  --      server = {
-  --        cmd = {
-  --          sonar_language_server_path .. "/sonarlint-language-server.cmd",
-  --          "-stdio",
-  --          "-analyzers",
-  --          vim.fn.expand(analyzers_path .. "/sonarphp.jar"),
-  --        }
-  --      },
-  --      filetypes = {
-  --        "php",
-  --      }
-  --    })
-  --  end
-  --},
 }

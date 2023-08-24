@@ -32,7 +32,7 @@ return {
           end,
           offsets = {
             {
-              filetype = "neo-tree",
+              filetype = "tree",
               text = os.getenv("PROJECT") or "Neo-tree",
               highlight = "Directory",
               text_align = "left",
@@ -62,7 +62,7 @@ return {
           section_separators = "",
           theme = "catppuccin",
           globalstatus = true,
-          disabled_filetypes = { statusline = { "dashboard", "alpha", "starter" } },
+          disabled_filetypes = { statusline = { "starter", "minifiles" } },
         },
         sections = {
           lualine_a = { "mode" },
@@ -154,7 +154,7 @@ return {
             end,
           },
         },
-        extensions = { "neo-tree", "lazy" },
+        extensions = { "lazy" },
       }
     end,
   },

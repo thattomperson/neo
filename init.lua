@@ -20,9 +20,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
     { import = "kickstart.plugins" },
-
-    -- For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
-    -- { import = "custom.plugins" },
   },
   defaults = {
     lazy = true,

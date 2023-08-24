@@ -5,7 +5,7 @@ return {
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     "lewis6991/gitsigns.nvim",
-    event = "VeryLazy",
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
       -- See `:help gitsigns.txt`
       signs = {
@@ -81,7 +81,6 @@ return {
   -- better vim.ui
   {
     "stevearc/dressing.nvim",
-    event = "VeryLazy",
     init = function()
       ---@diagnostic disable-next-line: duplicate-set-field
       vim.ui.select = function(...)
@@ -185,9 +184,17 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    event = "BufEnter",
+    event = { "BufReadPost", "BufNewFile" },
     opts = {
       char = "┊",
+      filetype_exclude = {
+        "starter",
+        "minifiles",
+        "toggleterm",
+        "mason",
+        "lazy",
+        "notify",
+      },
       show_current_context = true,
       show_trailing_blankline_indent = false,
     },
