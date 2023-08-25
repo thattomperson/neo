@@ -10,11 +10,11 @@ return {
     },
     dependencies = {
       "echasnovski/mini.bufremove",
-      "catppuccin",
+      "rose-pine",
     },
     opts = function()
       return {
-        highlights = require("catppuccin.groups.integrations.bufferline").get(),
+        highlights = require("rose-pine.plugins.bufferline"),
         options = {
           close_command = function(n)
             require("mini.bufremove").delete(n, false)
@@ -45,7 +45,7 @@ return {
   -- statusline
   {
     "nvim-lualine/lualine.nvim",
-    event = "VimEnter",
+    event = "BufReadPre",
     dependencies = {
       --"SmiteshP/nvim-navic",
       --"folke/noice.nvim",
@@ -60,7 +60,7 @@ return {
           -- Disable sections and component separators
           component_separators = "",
           section_separators = "",
-          theme = "catppuccin",
+          theme = "rose-pine",
           globalstatus = true,
           disabled_filetypes = { statusline = { "starter", "minifiles" } },
         },
