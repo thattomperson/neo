@@ -1,41 +1,18 @@
 return {
 
   -- Useful plugin to show you pending keybinds.
-  { "folke/which-key.nvim", opts = {}, lazy = false },
   {
-    -- Adds git releated signs to the gutter, as well as utilities for managing changes
-    "lewis6991/gitsigns.nvim",
-    event = { "BufReadPre", "BufNewFile" },
-    opts = {
-      -- See `:help gitsigns.txt`
-      signs = {
-        add = { text = "+" },
-        change = { text = "~" },
-        delete = { text = "_" },
-        topdelete = { text = "‾" },
-        changedelete = { text = "~" },
-      },
-      on_attach = function(bufnr)
-        vim.keymap.set(
-          "n",
-          "<leader>gp",
-          require("gitsigns").prev_hunk,
-          { buffer = bufnr, desc = "[G]o to [P]revious Hunk" }
-        )
-        vim.keymap.set(
-          "n",
-          "<leader>gn",
-          require("gitsigns").next_hunk,
-          { buffer = bufnr, desc = "[G]o to [N]ext Hunk" }
-        )
-        vim.keymap.set(
-          "n",
-          "<leader>ph",
-          require("gitsigns").preview_hunk,
-          { buffer = bufnr, desc = "[P]review [H]unk" }
-        )
-      end,
-    },
+    "folke/which-key.nvim",
+    opts = {},
+    lazy = false,
+    config = function (_, opts) 
+      wk = require('which-key');
+      wk.setup(opts);
+
+      wk.register({
+        ["<leader>g"] = { name = "+git" },
+      })
+    end
   },
   {
     "rose-pine/neovim",
@@ -138,140 +115,140 @@ return {
         "Scroll forward",
         mode = {
           "i", "n", "s" }
+        },
+        {
+          "<c-b>",
+          function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end,
+          silent = true,
+          expr = true,
+          desc =
+          "Scroll backward",
+          mode = {
+            "i", "n", "s" }
+          },
+        },
       },
       {
-        "<c-b>",
-        function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end,
-        silent = true,
-        expr = true,
-        desc =
-        "Scroll backward",
-        mode = {
-          "i", "n", "s" }
+        -- Add indentation guides even on blank lines
+        "lukas-reineke/indent-blankline.nvim",
+        -- Enable `lukas-reineke/indent-blankline.nvim`
+        -- See `:help indent_blankline.txt`
+        event = { "BufReadPost", "BufNewFile" },
+        opts = {
+          char = "┊",
+          filetype_exclude = {
+            "starter",
+            "minifiles",
+            "toggleterm",
+            "mason",
+            "lazy",
+            "notify",
+          },
+          show_current_context = true,
+          show_trailing_blankline_indent = false,
+        },
       },
-    },
-  },
-  {
-    -- Add indentation guides even on blank lines
-    "lukas-reineke/indent-blankline.nvim",
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help indent_blankline.txt`
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      char = "┊",
-      filetype_exclude = {
-        "starter",
-        "minifiles",
-        "toggleterm",
-        "mason",
-        "lazy",
-        "notify",
+      {
+        "nvim-treesitter/playground",
+        cmd = { "TSPlaygroundToggle" },
+        dependencies = {
+          "nvim-treesitter/nvim-treesitter",
+        }
       },
-      show_current_context = true,
-      show_trailing_blankline_indent = false,
-    },
-  },
-  {
-    "nvim-treesitter/playground",
-    cmd = { "TSPlaygroundToggle" },
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
+      {
+        -- Highlight, edit, and navigate code
+        "nvim-treesitter/nvim-treesitter",
+        cmd = { "TSUpdate" },
+        event = "BufEnter",
+        dependencies = {
+          "nvim-treesitter/nvim-treesitter-textobjects",
+        },
+        build = ":TSUpdate",
+        opts = {
+          -- Add languages to be installed here that you want installed for treesitter
+          ensure_installed = { "go", "lua", "tsx", "typescript", "vimdoc", "vim", "php", "json" },
+
+          -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
+          auto_install = false,
+
+          highlight = { enable = true },
+          indent = { enable = true },
+          incremental_selection = {
+            enable = true,
+            keymaps = {
+              init_selection = "<c-space>",
+              node_incremental = "<c-space>",
+              scope_incremental = "<c-s>",
+              node_decremental = "<M-space>",
+            },
+          },
+          textobjects = {
+            select = {
+              enable = true,
+              lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+              keymaps = {
+                -- You can use the capture groups defined in textobjects.scm
+                ["aa"] = "@parameter.outer",
+                ["ia"] = "@parameter.inner",
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+              },
+            },
+            move = {
+              enable = true,
+              set_jumps = true, -- whether to set jumps in the jumplist
+              goto_next_start = {
+                ["]m"] = "@function.outer",
+                ["]]"] = "@class.outer",
+              },
+              goto_next_end = {
+                ["]M"] = "@function.outer",
+                ["]["] = "@class.outer",
+              },
+              goto_previous_start = {
+                ["[m"] = "@function.outer",
+                ["[["] = "@class.outer",
+              },
+              goto_previous_end = {
+                ["[M"] = "@function.outer",
+                ["[]"] = "@class.outer",
+              },
+            },
+            swap = {
+              enable = true,
+              swap_next = {
+                ["<leader>a"] = "@parameter.inner",
+              },
+              swap_previous = {
+                ["<leader>A"] = "@parameter.inner",
+              },
+            },
+          },
+        },
+
+        -- scrollbar
+        { "lewis6991/satellite.nvim", opts = {}, event = "VeryLazy", enabled = false },
+        {
+          "echasnovski/mini.map",
+          main = "mini.map",
+          event = "VeryLazy",
+          enabled = false,
+          config = function()
+            local map = require("mini.map")
+            map.setup({
+              integrations = {
+                map.gen_integration.builtin_search(),
+                map.gen_integration.gitsigns(),
+                map.gen_integration.diagnostic(),
+              },
+            })
+            map.open()
+          end,
+        },
+        { import = "kickstart.plugins.ui.git" },
+        { import = "kickstart.plugins.ui.start" },
+        { import = "kickstart.plugins.ui.bars" },
+      },
     }
-  },
-  {
-    -- Highlight, edit, and navigate code
-    "nvim-treesitter/nvim-treesitter",
-    cmd = { "TSUpdate" },
-    event = "BufEnter",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
-    },
-    build = ":TSUpdate",
-    opts = {
-      -- Add languages to be installed here that you want installed for treesitter
-      ensure_installed = { "go", "lua", "tsx", "typescript", "vimdoc", "vim", "php", "json" },
-
-      -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-      auto_install = false,
-
-      highlight = { enable = true },
-      indent = { enable = true },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<c-space>",
-          node_incremental = "<c-space>",
-          scope_incremental = "<c-s>",
-          node_decremental = "<M-space>",
-        },
-      },
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ["aa"] = "@parameter.outer",
-            ["ia"] = "@parameter.inner",
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
-          },
-        },
-        move = {
-          enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            ["]m"] = "@function.outer",
-            ["]]"] = "@class.outer",
-          },
-          goto_next_end = {
-            ["]M"] = "@function.outer",
-            ["]["] = "@class.outer",
-          },
-          goto_previous_start = {
-            ["[m"] = "@function.outer",
-            ["[["] = "@class.outer",
-          },
-          goto_previous_end = {
-            ["[M"] = "@function.outer",
-            ["[]"] = "@class.outer",
-          },
-        },
-        swap = {
-          enable = true,
-          swap_next = {
-            ["<leader>a"] = "@parameter.inner",
-          },
-          swap_previous = {
-            ["<leader>A"] = "@parameter.inner",
-          },
-        },
-      },
-    },
-
-    -- scrollbar
-    { "lewis6991/satellite.nvim", opts = {}, event = "VeryLazy", enabled = false },
-    {
-      "echasnovski/mini.map",
-      main = "mini.map",
-      event = "VeryLazy",
-      enabled = false,
-      config = function()
-        local map = require("mini.map")
-        map.setup({
-          integrations = {
-            map.gen_integration.builtin_search(),
-            map.gen_integration.gitsigns(),
-            map.gen_integration.diagnostic(),
-          },
-        })
-        map.open()
-      end,
-    },
-
-    require("kickstart.plugins.ui.start"),
-    require("kickstart.plugins.ui.bars"),
-  },
-}

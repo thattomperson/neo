@@ -39,9 +39,8 @@ return {
     opts = {}
   },
 
-  require("kickstart.plugins.editor.lsp"),
-  require("kickstart.plugins.editor.lint"),
-  require("kickstart.plugins.editor.telescope"),
-  -- require("kickstart.plugins.editor.git"),
-  require("kickstart.plugins.editor.term"),
+  { import = "kickstart.plugins.editor.lsp" },
+  { import = "kickstart.plugins.editor.lint"},
+  { import = "kickstart.plugins.editor.telescope"},
+  { import = "kickstart.plugins.editor.term" },
 }
