@@ -5,7 +5,7 @@ return {
     "folke/which-key.nvim",
     opts = {},
     lazy = false,
-    config = function (_, opts) 
+    config = function (_, opts)
       wk = require('which-key');
       wk.setup(opts);
 
@@ -15,16 +15,12 @@ return {
     end
   },
   {
-    "rose-pine/neovim",
-    name = "rose-pine",
+    "folke/tokyonight.nvim",
     lazy = false,
     priority = 1000,
-    opts = {
-      dark_variant = 'moon',
-    },
-    config = function(_, opts)
-      require('rose-pine').setup(opts)
-      vim.cmd.colorscheme("rose-pine")
+    opts = {},
+    init = function ()
+      vim.cmd.colorscheme("tokyonight")
     end,
   },
   -- better vim.ui
@@ -229,24 +225,13 @@ return {
         },
 
         -- scrollbar
-        { "lewis6991/satellite.nvim", opts = {}, event = "VeryLazy", enabled = false },
         {
-          "echasnovski/mini.map",
-          main = "mini.map",
+          "lewis6991/satellite.nvim",
+          opts = {},
           event = "VeryLazy",
-          enabled = false,
-          config = function()
-            local map = require("mini.map")
-            map.setup({
-              integrations = {
-                map.gen_integration.builtin_search(),
-                map.gen_integration.gitsigns(),
-                map.gen_integration.diagnostic(),
-              },
-            })
-            map.open()
-          end,
+          cond = vim.fn.has('nvim-0.10') == 1,
         },
+
         { import = "kickstart.plugins.ui.git" },
         { import = "kickstart.plugins.ui.start" },
         { import = "kickstart.plugins.ui.bars" },

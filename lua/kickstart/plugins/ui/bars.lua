@@ -1,46 +1,15 @@
 return {
-  -- bufferline
   {
-    "akinsho/bufferline.nvim",
-    enabled = false,
-    event = "VeryLazy",
-    keys = {
-      { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
-      { "<leader>bP", "<Cmd>BufferLineGroupClose ungrouped<CR>", desc = "Delete non-pinned buffers" },
-    },
+    "utilyre/barbecue.nvim",
+    name = "barbecue",
+    event = "BufReadPre",
     dependencies = {
-      "echasnovski/mini.bufremove",
-      "rose-pine",
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- optional dependency
     },
-    opts = function()
-      return {
-        highlights = require("rose-pine.plugins.bufferline"),
-        options = {
-          close_command = function(n)
-            require("mini.bufremove").delete(n, false)
-          end,
-          right_mouse_command = function(n)
-            require("mini.bufremove").delete(n, false)
-          end,
-          diagnostics = "nvim_lsp",
-          always_show_bufferline = true,
-          diagnostics_indicator = function(_, _, diag)
-            local icons = require("kickstart.util.icons").diagnostics
-            local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-              .. (diag.warning and icons.Warn .. diag.warning or "")
-            return vim.trim(ret)
-          end,
-          offsets = {
-            {
-              filetype = "tree",
-              text = os.getenv("PROJECT") or "Neo-tree",
-              highlight = "Directory",
-              text_align = "left",
-            },
-          },
-        },
-      }
-    end,
+    opts = {
+      -- configurations go here
+    },
   },
   -- statusline
   {
@@ -60,7 +29,7 @@ return {
           -- Disable sections and component separators
           component_separators = "",
           section_separators = "",
-          theme = "rose-pine",
+          theme = "tokyonight",
           globalstatus = true,
           disabled_filetypes = { statusline = { "starter", "minifiles" } },
         },
@@ -77,21 +46,7 @@ return {
                 hint = icons.diagnostics.Hint,
               },
             },
-            {
-              "filetype",
-              icon_only = true,
-              separator = "",
-              padding = {
-                left = 1,
-                right = 0,
-              },
-            },
-            { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
             -- stylua: ignore
-            {
-              function() return require("nvim-navic").get_location() end,
-              cond = function() return package.loaded["nvim-navic"] and require("nvim-navic").is_available() end,
-            },
             {
               function()
                 local msg = "No Active Lsp"
