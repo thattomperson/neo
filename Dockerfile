@@ -9,13 +9,16 @@ LABEL org.opencontainers.image.source "https://github.com/thattomperson/neo"
 ENV HOME="/root"
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
+RUN apk add --no-cache bash tini perl fish ripgrep openjdk17;
+
 # Install nvim
-RUN apk add --no-cache build-base cmake coreutils curl unzip gettext-tiny-dev bash tini perl fish ripgrep openjdk17;
-RUN git clone --depth 1 https://github.com/neovim/neovim --branch nightly /usr/src/neovim && \
+RUN apk add --no-cache --virtual .build-deps build-base cmake coreutils curl unzip gettext-tiny-dev && \
+  git clone --depth 1 https://github.com/neovim/neovim --branch master /usr/src/neovim && \
   cd /usr/src/neovim && \
   make CMAKE_BUILD_TYPE=RelWithDebInfo && \
   make install && \
-  rm -rf /usr/src/neovim
+  rm -rf /usr/src/neovim && \
+  apk del .build-deps;
 
 # Install Lazygit cli
 RUN LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Eo '"tag_name": "v([^"])*' | cut -c15-); \
@@ -47,7 +50,7 @@ RUN case ${TARGETARCH} in \
   esac; \
   curl -fsSLO "https://download.docker.com/linux/static/stable/${DOCKER_ARCH}/docker-${DOCKERVERSION}.tgz" \
   && tar xzvf docker-${DOCKERVERSION}.tgz --strip 1 \
-                 -C /usr/local/bin docker/docker \
+    -C /usr/local/bin docker/docker \
   && rm docker-${DOCKERVERSION}.tgz
 
 ENV TZ=Australia/Adelaide
