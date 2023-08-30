@@ -6,12 +6,28 @@ return {
     opts = {},
     lazy = false,
     config = function (_, opts)
-      wk = require('which-key');
+      local wk = require('which-key');
       wk.setup(opts);
 
       wk.register({
-        ["<leader>g"] = { name = "+git" },
-      })
+        g = {
+          name = "git",
+        },
+        b = {
+          name = "buffer",
+          ["["] = { "<cmd> bprev <cr>", "Go to previous buffer" },
+          ["]"] = { "<cmd> bnext <cr>", "Go to next buffer" },
+        },
+      }, {prefix = "<leader>"})
+
+      --vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
+
+      -- Remap for dealing with word wrap
+      -- vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+      -- vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+      -- vim.keymap.set("n", "b[", "<cmd> bprev <cr>", { desc = "Goto prev buffer" })
+      -- vim.keymap.set("n", "b]", "<cmd> bnext <cr>", { desc = "Goto next buffer" })
     end
   },
   {
