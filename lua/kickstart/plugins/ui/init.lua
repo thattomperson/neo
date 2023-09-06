@@ -178,7 +178,7 @@ return {
         build = ":TSUpdate",
         opts = {
           -- Add languages to be installed here that you want installed for treesitter
-          ensure_installed = { "go", "lua", "tsx", "typescript", "vimdoc", "vim", "php", "json" },
+          ensure_installed = { "go", "lua", "tsx", "typescript", "vimdoc", "vim", "php", "json", "sql" },
 
           -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
           auto_install = false,
@@ -251,5 +251,6 @@ return {
         { import = "kickstart.plugins.ui.git" },
         { import = "kickstart.plugins.ui.start" },
         { import = "kickstart.plugins.ui.bars" },
+        { import = "kickstart.plugins.ui.database" },
       },
     }
