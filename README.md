@@ -1,159 +1,113 @@
-# kickstart.nvim
+<div align="center">
+  <img src="https://github.com/NormalNvim/NormalNvim/assets/3357792/76197752-0947-4392-a6bd-a59d64319028"></img>
+  <h1><a href="https://github.com/NormalNvim/NormalNvim">NormalNvim</a></h1>
+  <h3>*✨ ~ ⭐ - A normal NeoVim config - ⭐ ~ ✨*</h3>
+  <a href="https://discord.gg/ymcMaSnq7d" rel="nofollow">
+      <img src="https://img.shields.io/discord/1121138836525813760?color=azure&labelColor=6DC2A4&logo=discord&logoColor=black&label=Join the discord server&style=for-the-badge" data-canonical-src="https://img.shields.io/discord/1121138836525813760">
+    </a>
+</div>
 
-https://github.com/kdheepak/kickstart.nvim/assets/1813121/f3ff9a2b-c31f-44df-a4fa-8a0d7b17cf7b
+---
 
-### Introduction
 
-A starting point for Neovim that is:
+Tokyo Night (Night) theme by default
+![screenshot_2023-05-27_16-41-26_120206834](https://github.com/Zeioth/NormalNvim/assets/3357792/8f3b76c8-3ceb-4b8d-a0e1-50f73c94eb00)
 
-* Small
-* Single-file (with examples of moving to multi-file)
-* Documented
-* Modular
+The space key shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/basic-mappings)
+![screenshot_2023-06-14_11-41-03_398515538](https://github.com/NormalNvim/NormalNvim/assets/3357792/af73f0b2-b56e-47d8-9bb8-f68b76e4b577)
 
-This repo is meant to be used by **YOU** to begin your Neovim journey; remove the things you don't use and add what you miss.
 
-Kickstart.nvim targets *only* the latest ['stable'](https://github.com/neovim/neovim/releases/tag/stable) and latest ['nightly'](https://github.com/neovim/neovim/releases/tag/nightly) of Neovim. If you are experiencing issues, please make sure you have the latest versions.
+## Install (Linux/MacOS)
+```sh
+# Strongly recommended: Fork the repo and clone YOUR fork.
+git clone https://github.com/NormalNvim/NormalNvim.git ~/.config/nvim
+```
 
-Distribution Alternatives:
-- [LazyVim](https://www.lazyvim.org/): A delightful distribution maintained by @folke (the author of lazy.nvim, the package manager used here)
+## Install (Windows)
+```sh
+# Strongly recommended: Fork the repo and clone YOUR fork.
+git clone https://github.com/NormalNvim/NormalNvim.git %USERPROFILE%\AppData\Local\nvim && nvim
+```
 
-### Installation
+## Dependencies
+NormalNvim will connect to the internet the first time you open it to download the plugins. But [to unlock all features you must install the dependencies](https://github.com/NormalNvim/NormalNvim/wiki/dependencies).
 
-> **NOTE** 
-> [Backup](#FAQ) your previous configuration (if any exists)
+## Distro features
 
-Requirements:
-* Make sure to review the readmes of the plugins if you are experiencing errors. In particular:
-  * [ripgrep](https://github.com/BurntSushi/ripgrep#installation) is required for multiple [telescope](https://github.com/nvim-telescope/telescope.nvim#suggested-dependencies) pickers.
-* See [Windows Installation](#Windows-Installation) if you have trouble with `telescope-fzf-native`
+* ⚡ **Lazy:** Plugins are loaded lazily, providing super fast performance.
+* 😎 **Plugins are self-contained:** Allowing you to easily delete what you don't want.
+* 🔋 **Batteries included:** Most [plugins](https://github.com/NormalNvim/NormalNvim/wiki/plugins) you will ever need are included and debugged by default. Get the best user experience out of the box and forget about nasty bugs in your Neovim config.
+* 🤖 **IDE tools:** We ship [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) (compiler), [DAP](https://github.com/mfussenegger/nvim-dap) (debugger), [Neotest](https://github.com/nvim-neotest/neotest) (test runner), and [Dooku.nvim](https://github.com/Zeioth/dooku.nvim) (docs generator)
+* 🐞 **IDE parsers:** Linters, Formatters, LSP, Treesitter... preinstalled, preconfigured and ready to code for the top 12 most popular programming languages.
+* 🔒 **Plugin version lock:** You can choose "stable" or "nightly" update channels. Or if you prefer, use :NvimFreezePluginVersions to create your own stable versions!
+* 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
+* 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
+* 📱 **Phone friendly:** You can also install it on Android Termux. Did you ever have a compiler in your pocket? 😉
+* ⌨️ **Alternative mappings:** By default the distro uses qwerty, but colemak-dh can be found [here](https://github.com/Zeioth/NormalNvim/wiki/colemak-dh).
+* ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never [hide or abstract](https://i.imgur.com/FCiZvp2.png) stuff from you.
 
-Neovim's configurations are located under the following paths, depending on your OS:
+## Philosophy and design decisions
+__You are expected to fork the project before cloning it. So you are the only one in control. It is also recommended to use [neovim's appimage](https://github.com/neovim/neovim/releases).__
 
-| OS | PATH |
-| :- | :--- |
-| Linux | `$XDG_CONFIG_HOME/nvim`, `~/.config/nvim` |
-| MacOS | `$XDG_CONFIG_HOME/nvim`, '~/.config/nvim` |
-| Windows | `%userprofile%\AppData\Local\nvim\` |
+> This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro.
 
-Clone kickstart.nvim:
+[NormalNvim](https://github.com/Zeioth/NormalNvim) won't be the next [/r/UnixPorn](https://www.reddit.com/r/unixporn/) sensation. It is a normal nvim config you can trust 100% will never unexpectedly break while you are working. Nothing flashy. Nothing brightful. Just bread and butter.
+
+## Commands
+
+|  Command            | Description                             |
+|---------------------|-----------------------------------------|
+| **:checkhealth base** | Check the system dependencies you are missing. |
+| **:NvimUpdateConfig** | Pulls the latest changes from the current git repository of your nvim config. Useful to keep your config updated when you use it in more than one machine. If the updates channel is `stable` this command will pull from the latest available tag release in your github repository. Only tag releases starting by 'v', such as v1.0.0 are recognized. It is also possible to define a specific stable version in `2-lazy.lua` by setting the option `stable_vesion_release`. If the channel is `nightly` it will pull from the nightly branch. Note that uncommited local changes in your config will be lost after an update, so it's important you commit before updating your distro config. |
+| **:NvimRollbackCreate** | Creates a recovery point. It is triggered automatically when running `:NvimUpdateConfig`. | 
+| **:NvimRollbackRestore** | Uses git to bring your config to the state it had when `:NvimRollbackCreate` was called. | 
+| **:NvimReload** | Hot reloads the config without leaving nvim. It can cause unexpected issues sometimes. It is automatically triggered when writing the files `1-options.lua` and `4-mappings`. |
+| **:NvimUpdatePlugins** | Uses lazy to update the plugins. |
+| **:NvimFreezePluginVersions** | Saves your current plugin versions into `lazy_versions.lua` in your config directory. If you are using the `stable` updates channel, this file will be used to decide what plugin versions will be installed, and even if you manually try to update your plugins using lazy package manager, the versions file will be respected. If you are using the `nightly` channel, the first time you open nvim, the versions from `lazy_versions.lua` will be installed, but it will be possible to download the last versions by manually updating your plugins with lazy. Note that after running this command, you can manually modify `lazy_versions.lua` in case you only want to freeze some plugins. |
+| **:CloseNotificaitons** | Close all notifications. This is automatically triggered by default when writting a buffer. |
+| **:NvimVersion** | Prints the commit number of the current NormalNvim version. |
+
+For more info, [read the wiki](https://github.com/Zeioth/NormalNvim/wiki).
+
+## FAQ
+Please before opening an issue, check the [astrocommunity](https://github.com/AstroNvim/astrocommunity) repo where you can find help about how to install and configure most plugins.
+
+* **NormalNvim is not working. How can I know why?**
+
+    `:checkhealth base`
+
+* **Supports Windows?**
+Yes, 100%. This is not necessary, but we strongly recommend you to launch NormalNvim [using WLS](https://www.youtube.com/watch?v=fFbLUEQsRhM) so you can install [the required dependencies](https://github.com/NormalNvim/NormalNvim/wiki/dependencies) to unlock all features.
+
+* **How can I disable the tabline?** On the options file, search for `showtabline` and set it to 0. If instead you want to remove the functionality completely from nvim, then check the plugin heirline. Here is where we implement the tabline logic. Also check [./lua/base/utils/status.lua](https://github.com/NormalNvim/NormalNvim/blob/main/lua/base/utils/status.lua) if you want to delete heirline helper functions.
+
+* **How can I disable the animations?** You can delete the plugin [mini.animate](https://github.com/echasnovski/mini.animate). In case you only want to disable some animations look into the plugin docs.
+
+* **How can I use `Ask chatgpt`?** On your operative system, set the next env var. You can get an API key from [chatgpt's website](https://platform.openai.com/account/api-keys).
 
 ```sh
-# on Linux and Mac
-git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
-# on Windows
-git clone https://github.com/nvim-lua/kickstart.nvim.git %userprofile%\AppData\Local\nvim\ 
+OPENAI_API_KEY="my_key_here"
 ```
 
-### Post Installation
+* **What scenarios are not covered by this distro?**
+  * **Kubernetes**: We do not provide a kubernetes plugin. But we recommend using friendly-snippets, to quickly write code, and [overseer.nvim](https://github.com/stevearc/overseer.nvim) to run kubernetes commands from inside nvim without having to wait for the server response.
+  * **e2e testing**: We do not provide an e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands. You can also rename the commands to anything you want in case you don't use nodejs.
 
-Run the following command and then **you are ready to go**!
+## 🌟 Support the project
+If you want to help me, please star this repository to increase the visibility of the project.
 
-```sh
-nvim --headless "+Lazy! sync" +qa
-```
+[![Stargazers over time](https://starchart.cc/NormalNvim/NormalNvim.svg)](https://starchart.cc/NormalNvim/NormalNvim)
 
-### Recommended Steps
+## Fix a bug and send a PR to appear as contributor
 
-[Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) this repo (so that you have your own copy that you can modify) and then installing you can install to your machine using the methods above.
+<a href="https://github.com/NormalNvim/NormalNvim/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=NormalNvim/NormalNvim" />
+</a>
 
-> **NOTE**  
-> Your fork's url will be something like this: `https://github.com/<your_github_username>/kickstart.nvim.git`
+## Credits
+Originally it took AstroNvim as base. But implements [this VIM config](https://github.com/amix/vimrc) with some extras. Code has been simplified while retaining its core features. NormalNvim has also contributed to the code of many of the plugins included, in order to debug them and make them better.
 
-### Configuration And Extension
+Special thanks to LeoRed04 for designing the logo.
 
-* Inside of your copy, feel free to modify any file you like! It's your copy!
-* Feel free to change any of the default options in `init.lua` to better suit your needs.
-* For adding plugins, there are 3 primary options:
-  * Add new configuration in `lua/custom/plugins/*` files, which will be auto sourced using `lazy.nvim` (uncomment the line importing the `custom/plugins` directory in the `init.lua` file to enable this)
-  * Modify `init.lua` with additional plugins.
-  * Include the `lua/kickstart/plugins/*` files in your configuration.
-
-You can also merge updates/changes from the repo back into your fork, to keep up-to-date with any changes for the default configuration.
-
-#### Example: Adding an autopairs plugin
-
-In the file: `lua/custom/plugins/autopairs.lua`, add:
-
-```lua
--- File: lua/custom/plugins/autopairs.lua
-
-return {
-  "windwp/nvim-autopairs",
-  -- Optional dependency
-  dependencies = { 'hrsh7th/nvim-cmp' },
-  config = function()
-    require("nvim-autopairs").setup {}
-    -- If you want to automatically add `(` after selecting a function or method
-    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-    local cmp = require('cmp')
-    cmp.event:on(
-      'confirm_done',
-      cmp_autopairs.on_confirm_done()
-    )
-  end,
-}
-```
-
-
-This will automatically install [windwp/nvim-autopairs](https://github.com/windwp/nvim-autopairs) and enable it on startup. For more information, see documentation for [lazy.nvim](https://github.com/folke/lazy.nvim).
-
-#### Example: Adding a file tree plugin
-
-In the file: `lua/custom/plugins/filetree.lua`, add:
-
-```lua
--- Unless you are still migrating, remove the deprecated commands from v1.x
-vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
-
-return {
-  "nvim-neo-tree/neo-tree.nvim",
-  version = "*",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-    "MunifTanjim/nui.nvim",
-  },
-  config = function ()
-    require('neo-tree').setup {}
-  end,
-}
-```
-
-This will install the tree plugin and add the command `:Neotree` for you. You can explore the documentation at [neo-tree.nvim](https://github.com/nvim-neo-tree/neo-tree.nvim) for more information.
-
-### Contribution
-
-Pull-requests are welcome. The goal of this repo is not to create a Neovim configuration framework, but to offer a starting template that shows, by example, available features in Neovim. Some things that will not be included:
-
-* Custom language server configuration (null-ls templates)
-* Theming beyond a default colorscheme necessary for LSP highlight groups
-
-Each PR, especially those which increase the line count, should have a description as to why the PR is necessary.
-
-### FAQ
-
-* What should I do if I already have a pre-existing neovim configuration?
-  * You should back it up, then delete all files associated with it.
-  * This includes your existing init.lua and the neovim files in `~/.local` which can be deleted with `rm -rf ~/.local/share/nvim/`
-  * You may also want to look at the [migration guide for lazy.nvim](https://github.com/folke/lazy.nvim#-migration-guide)
-* What if I want to "uninstall" this configuration:
-  * See [lazy.nvim uninstall](https://github.com/folke/lazy.nvim#-uninstalling) information
-* Are there any cool videos about this plugin?
-  * Current iteration of kickstart (coming soon)
-  * Here is one about the previous iteration of kickstart: [video introduction to Kickstart.nvim](https://youtu.be/stqUbv-5u2s). Note the install via init.lua no longer works as specified. Please follow the install instructions in this file instead as they're up to date.
-
-### Windows Installation
-
-Installation may require installing build tools, and updating the run command for `telescope-fzf-native`
-
-See `telescope-fzf-native` documentation for [more details](https://github.com/nvim-telescope/telescope-fzf-native.nvim#installation)
-
-This requires:
-
-- Install CMake, and the Microsoft C++ Build Tools on Windows
-
-```lua
-{'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' }
-```
-
+## Roadmap
+* Creating a landing page.

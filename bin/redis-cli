@@ -1,0 +1,3 @@
+#! /usr/bin/env sh
+
+docker exec -it four-redis-1 redis-cli $@
