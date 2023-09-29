@@ -9,7 +9,7 @@ LABEL org.opencontainers.image.source "https://github.com/thattomperson/neo"
 ENV HOME="/root"
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN apk add --no-cache bash tini perl fish ripgrep openjdk17 postgresql-client;
+RUN apk add --no-cache bash tini perl fish fzf ripgrep openjdk17 postgresql-client;
 
 # Install nvim
 RUN apk add --no-cache --virtual .build-deps build-base cmake coreutils curl unzip gettext-tiny-dev && \

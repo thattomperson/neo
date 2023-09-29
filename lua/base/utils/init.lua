@@ -26,6 +26,7 @@
 --      -> set_url_effect        → Show an effect for urls.
 --      -> cmd                   → Run a shell command and return true/false
 --      -> confirm_quit          → Ask for confirmation before exit.
+--      -> which                 → Get the path of an executable
 
 local M = {}
 
@@ -415,6 +416,19 @@ function M.confirm_quit()
   end
 end
 
+function M.which(program_name)
+  local path_separator = vim.fn.has("win32") == 1 and ";" or ":"
+  local path = os.getenv("PATH") or ""
+  local paths = vim.split(path, path_separator)
 
+  for _, p in ipairs(paths) do
+    local program_path = p .. "/" .. program_name
+    if vim.fn.executable(program_path) == 1 then
+      return program_path
+    end
+  end
+
+  return false
+end
 
 return M

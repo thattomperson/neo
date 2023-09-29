@@ -23,6 +23,7 @@
 
 -- import custom icons
 local get_icon = require("base.utils").get_icon
+local which = require("base.utils").which
 
 -- configures plugins
 return {
@@ -148,6 +149,7 @@ return {
         border = "rounded",
         highlights = { border = "Normal", background = "Normal" },
       },
+      shell = which("fish") or vim.o.shell,
     },
   },
 
